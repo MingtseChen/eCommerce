@@ -1,0 +1,17 @@
+{
+  "name": "eCommerce",
+  "description": "",
+  "main": "",
+  "authors": [
+    "MTChen <gene31105@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
