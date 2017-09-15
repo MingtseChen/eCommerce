@@ -30,14 +30,21 @@ class UserController extends Controller
 	        'datas' => $getAll,
         ]);
     }
-	public function Create()
+	public function show()
 	{
 		$getAll = User::all();
 		return view('admin/home',[
 			'datas' => $getAll,
 		]);
 	}
-	public function Edit()
+	public function create()
+	{
+		$getAll = User::all();
+		return view('admin/home',[
+			'datas' => $getAll,
+		]);
+	}
+	public function edit()
 	{
 		$getAll = User::all();
 		return view('admin/home',[
@@ -45,10 +52,10 @@ class UserController extends Controller
 		]);
 	}
 
-	public function Delete($id)
+	public function destroy($id)
 	{
 		$deleteTarget = User::where('id' ,"=","$id");
 		$deleteTarget -> delete();
-		return redirect('admin/index');
+		return redirect('/admin/index');
 	}
 }
