@@ -32,22 +32,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($datas as $data)
+                            @foreach($users as $user)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{$data -> name}}</td>
-                                    <td>{{$data -> username}}</td>
-                                    <td>{{$data -> email}}</td>
-                                    <td>{{$data -> create_at}}</td>
+                                    <td>{{$user -> name}}</td>
+                                    <td>{{$user -> username}}</td>
+                                    <td>{{$user -> email}}</td>
+                                    <td>{{$user -> create_at}}</td>
                                     <td>
-                                        <form method="GET" action="{{route('admin.edit',['id' => $data->id])}}">
+                                        <form method="GET" action="{{route('admin.edit',['id' => $user->id])}}">
                                             <button type="submit" class="btn btn-success btn-xs">
                                                 <span>Edit</span>
                                             </button>
                                         </form>
                                     </td>
                                     <td>
-                                        <form method="POST" action="{{route('admin.destroy',['id' => $data->id])}}">
+                                        <form method="POST" action="{{route('admin.destroy',['id' => $user->id])}}">
                                             {{ method_field('DELETE') }}
                                             {{csrf_field()}}
                                             <button type="submit" class="btn btn-danger btn-xs">

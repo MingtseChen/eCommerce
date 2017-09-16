@@ -29,9 +29,9 @@ class UserController extends Controller
      */
     public function index()
     {
-	    $getAll = User::all();
+	    $getAll = User::where('id','!=','1')->get();
         return view::make('admin/home',[
-	        'datas' => $getAll,
+	        'users' => $getAll,
         ]);
     }
 
@@ -41,15 +41,21 @@ class UserController extends Controller
 	}
 	public function store(Request $request)
 	{
+		$this->validate($request,[
+			'name' => 'required|string|max:25',
+			'username' => 'required|string|max:25|unique:users',
+			'email' => 'required|string|email|max:255|unique:users',
+			'password' => 'required|string|min:6|confirmed',
+		]);
 		//$newUser = new User();
-		User()::create([
+		User::create([
 		'name' => $request->input('username'),
 		'username' => $request->input('username'),
 		'email' => $request->input('email'),
 		'password' => bcrypt($request->input('password')),
 		'isAdmin' => 0,
 		]);
-		return Redirect::route('admin.index');
+		return redirect()->route('admin.index');
 	}
 
 	public function edit($id)
@@ -62,19 +68,27 @@ class UserController extends Controller
 
 	public function update($id,Request $request)
 	{
+		$this->validate($request,[
+			'name' => 'required|string|max:25',
+			'username' => 'required|string|max:25|unique:users,username,'.$id,
+			'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+		]);
 		$getOne = User::findOrFail($id);
 		$getOne->name = $request->input('name');
 		$getOne->username = $request->input('username');
 		$getOne->email = $request->input('email');
+		/*if(!empty(($request->input('password')))){
+			$getOne->password = bcrypt($request->input('password'));
+		}*/
 		//$getOne->create_at->Carbon::now()->toDateTimeString();
 		$getOne->save();
-		return Redirect::route('admin.index');
+		return redirect()->route('admin.index');
 	}
 
 	public function destroy($id)
 	{
 		$deleteTarget = User::whereId($id);
 		$deleteTarget -> delete();
-		return Redirect::route('admin.index');
+		return redirect()->route('admin.index');
 	}
 }
