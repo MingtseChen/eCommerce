@@ -13,7 +13,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form class="form-horizontal" method="POST" action="{{route('admin.store')}}">
+                        <form class="form-horizontal" method="POST" action="{{route($ctrler.'.store')}}">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -88,7 +88,7 @@
                                     <button type="submit" class="btn btn-success">
                                         Create
                                     </button>
-                                    <a class="btn btn-warning" href="{{route('admin.index')}}">
+                                    <a class="btn btn-warning" href="{{route($ctrler.'.index')}}">
                                         Return
                                     </a>
                                 </div>

@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+	var $_func_name = 'manager';
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -18,10 +21,11 @@ class AdminController extends Controller
 	 */
 	public function index()
 	{
-		$getAll = User::where('id', '!=', '1')->get();
+		$getAll = User::where('isAdmin', '=', '1')->get();
 		return view::make('admin/home', [
-			'datas' => $getAll,
-		])->route('admin/home');
+			'users' => $getAll,
+			'ctrler' => 'manager',
+		]);
 	}
 
 	/**
@@ -31,7 +35,9 @@ class AdminController extends Controller
 	 */
 	public function create()
 	{
-		return View::make('admin.create');
+		return View::make('admin.create', [
+			'ctrler' => 'manager',
+		]);
 	}
 
 	/**
@@ -42,21 +48,20 @@ class AdminController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		$this->validate($request, [
+		$this->validate($request,[
 			'name' => 'required|string|max:25',
-			'username' => 'required|string|max:25|unique:users',
-			'email' => 'required|string|email|max:255|unique:users',
+			'username' => 'required|string|max:25|unique:users,username',
+			'email' => 'required|string|email|max:255|unique:users,email',
 			'password' => 'required|string|min:6|confirmed',
 		]);
-		//$newUser = new User();
 		User::create([
 			'name' => $request->input('username'),
 			'username' => $request->input('username'),
 			'email' => $request->input('email'),
 			'password' => bcrypt($request->input('password')),
-			'isAdmin' => 0,
+			'isAdmin' => 1,
 		]);
-		return redirect()->route('admin.index');
+		return redirect()->route('manager.index');
 	}
 
 	/**
@@ -79,8 +84,9 @@ class AdminController extends Controller
 	public function edit($id)
 	{
 		$getOne = User::findOrFail($id);
-		return View::make('admin.edit', [
+		return View::make('user.edit', [
 			'data' => $getOne,
+			'ctrler' => 'manager',
 		]);
 	}
 
@@ -93,22 +99,20 @@ class AdminController extends Controller
 	 */
 	public function update($id, Request $request)
 	{
-		$this->validate($request, [
+		$this->validate($request,[
 			'name' => 'required|string|max:25',
-			'username' => 'required|string|max:25|unique:users',
-			'email' => 'required|string|email|max:255|unique:users',
-			'password' => 'required|string|min:6|confirmed',
+			'username' => 'required|string|max:25|unique:users,username,'.$id,
+			'email' => 'required|string|email|max:255|unique:users,email,'.$id,
 		]);
 		$getOne = User::findOrFail($id);
 		$getOne->name = $request->input('name');
 		$getOne->username = $request->input('username');
 		$getOne->email = $request->input('email');
-		if (!empty(($request->input('password')))) {
+		/*if (!empty(($request->input('password')))) {
 			$getOne->password = bcrypt($request->input('password'));
-		}
-		//$getOne->create_at->Carbon::now()->toDateTimeString();
+		}*/
 		$getOne->save();
-		return redirect()->route('admin.index');
+		return redirect()->route('manager.index');
 	}
 
 	/**
@@ -121,6 +125,6 @@ class AdminController extends Controller
 	{
 		$deleteTarget = User::whereId($id);
 		$deleteTarget->delete();
-		return redirect()->route('login');
+		return redirect()->route('manager.index');
 	}
 }

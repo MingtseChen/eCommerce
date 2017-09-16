@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+	public $_func_name= 'user';
     /**
      * Create a new controller instance.
      *
@@ -29,22 +30,28 @@ class UserController extends Controller
      */
     public function index()
     {
-	    $getAll = User::where('id','!=','1')->get();
-        return view::make('admin/home',[
+	    $getAll = User::where('isAdmin','!=','1')->get();
+        /*return view::make('admin/home',[
 	        'users' => $getAll,
+        ]);*/
+        return view('admin.home',[
+	        'users' => $getAll,
+	        'ctrler' => 'user',
         ]);
     }
 
 	public function create()
 	{
-		return View::make('admin.create');
+		return View::make('admin.create',[
+			'ctrler' => 'user',
+		]);
 	}
 	public function store(Request $request)
 	{
 		$this->validate($request,[
 			'name' => 'required|string|max:25',
-			'username' => 'required|string|max:25|unique:users',
-			'email' => 'required|string|email|max:255|unique:users',
+			'username' => 'required|string|max:25|unique:users,username',
+			'email' => 'required|string|email|max:255|unique:users,email',
 			'password' => 'required|string|min:6|confirmed',
 		]);
 		//$newUser = new User();
@@ -55,7 +62,7 @@ class UserController extends Controller
 		'password' => bcrypt($request->input('password')),
 		'isAdmin' => 0,
 		]);
-		return redirect()->route('admin.index');
+		return redirect()->route('user.index');
 	}
 
 	public function edit($id)
@@ -63,6 +70,7 @@ class UserController extends Controller
 		$getOne = User::findOrFail($id);
 		return View::make('admin.edit',[
 			'data' => $getOne,
+			'ctrler' => 'user',
 		]);
 	}
 
@@ -77,18 +85,14 @@ class UserController extends Controller
 		$getOne->name = $request->input('name');
 		$getOne->username = $request->input('username');
 		$getOne->email = $request->input('email');
-		/*if(!empty(($request->input('password')))){
-			$getOne->password = bcrypt($request->input('password'));
-		}*/
-		//$getOne->create_at->Carbon::now()->toDateTimeString();
 		$getOne->save();
-		return redirect()->route('admin.index');
+		return redirect()->route('user.index');
 	}
 
 	public function destroy($id)
 	{
 		$deleteTarget = User::whereId($id);
 		$deleteTarget -> delete();
-		return redirect()->route('admin.index');
+		return redirect()->route('user.index');
 	}
 }

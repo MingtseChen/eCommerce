@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="container">
-                <a type="button" class="btn btn-success" href="{{route('admin.create')}}">Add</a>
+                <a type="button" class="btn btn-success" href="{{route($ctrler.'.create')}}">Add</a>
             </div>
             <br/>
             <div class="col-md-12">
@@ -40,14 +40,14 @@
                                     <td>{{$user -> email}}</td>
                                     <td>{{$user -> create_at}}</td>
                                     <td>
-                                        <form method="GET" action="{{route('admin.edit',['id' => $user->id])}}">
+                                        <form method="GET" action="{{route($ctrler.'.edit',['id' => $user->id])}}">
                                             <button type="submit" class="btn btn-success btn-xs">
                                                 <span>Edit</span>
                                             </button>
                                         </form>
                                     </td>
                                     <td>
-                                        <form method="POST" action="{{route('admin.destroy',['id' => $user->id])}}">
+                                        <form method="POST" action="{{route($ctrler.'.destroy',['id' => $user->id])}}">
                                             {{ method_field('DELETE') }}
                                             {{csrf_field()}}
                                             <button type="submit" class="btn btn-danger btn-xs">

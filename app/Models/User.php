@@ -33,10 +33,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends /*Authenticatable*/Authenticatable
+class User extends Authenticatable
 {
 	use Notifiable;
-	//use Authenticatable;
 	/**
 	 * The attributes that are mass assignable.
 	 *
