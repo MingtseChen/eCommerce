@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="container">
-                <a type="button" class="btn btn-success" href="#">Add</a>
+                <a type="button" class="btn btn-success" href="{{route('admin.create')}}">Add</a>
             </div>
             <br/>
             <div class="col-md-12">
@@ -36,16 +36,22 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$data -> name}}</td>
-                                    <td>{{$data -> name}}</td>
+                                    <td>{{$data -> username}}</td>
                                     <td>{{$data -> email}}</td>
                                     <td>{{$data -> create_at}}</td>
-                                    <td>Edit</td>
+                                    <td>
+                                        <form method="GET" action="{{route('admin.edit',['id' => $data->id])}}">
+                                            <button type="submit" class="btn btn-success btn-xs">
+                                                <span>Edit</span>
+                                            </button>
+                                        </form>
+                                    </td>
                                     <td>
                                         <form method="POST" action="{{route('admin.destroy',['id' => $data->id])}}">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <button type="submit" class="btn btn-danger btn-group-xs">
-                                                <span>delete</span>
+                                            {{ method_field('DELETE') }}
+                                            {{csrf_field()}}
+                                            <button type="submit" class="btn btn-danger btn-xs">
+                                                <span>Delete</span>
                                             </button>
                                         </form>
                                     </td>

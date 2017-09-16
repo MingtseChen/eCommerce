@@ -10,12 +10,11 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class PasswordReset
+ * App\Models\PasswordReset
  *
  * @property string $email
  * @property string $token
- * @property \Carbon\Carbon $created_at
- * @package App\Models
+ * @property string|null $created_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PasswordReset whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PasswordReset whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\PasswordReset whereToken($value)
