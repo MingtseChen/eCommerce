@@ -13,7 +13,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form class="form-horizontal" method="POST" action="{{route('user.update',['id' => $data->id])}}">
+                        <form class="form-horizontal" method="POST" action="{{route($ctrler.'.update',['id' => $data->id])}}">
                             {{ method_field('PUT') }}
                             {{ csrf_field() }}
 
@@ -70,7 +70,7 @@
                                     <a class="btn btn-danger" href="#">
                                         Password Recover
                                     </a>
-                                    <a class="btn btn-warning" href="{{route('user.index')}}">
+                                    <a class="btn btn-warning" href="{{route($ctrler.'.index')}}">
                                         Return
                                     </a>
                                 </div>
