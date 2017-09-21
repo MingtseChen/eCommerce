@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Middleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('shop.index');
 });
+Route::Auth();
+Route::group(['middleware' => ['admin']], function () {
+	Route::resource('admin/user', 'Admin\UserController');
+	Route::resource('admin/manager', 'Admin\AdminController');
+	Route::resource('admin/product', 'Admin\ProductController');
+});
+Route::resource('user/setting','User\MemberController');
 
-Auth::routes();
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::resource('admin/user', 'Admin\UserController');
-Route::resource('admin/manager', 'Admin\AdminController');
+Route::resource('/', 'HomeController');

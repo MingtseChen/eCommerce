@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-	public $_func_name= 'user';
     /**
      * Create a new controller instance.
      *

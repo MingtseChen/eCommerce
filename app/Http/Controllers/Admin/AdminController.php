@@ -12,7 +12,10 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
 
-	var $_func_name = 'manager';
+	public function __construct()
+	{
+		$this->middleware('admin');
+	}
 
 	/**
 	 * Display a listing of the resource.
