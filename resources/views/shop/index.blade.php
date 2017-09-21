@@ -49,9 +49,18 @@
                                 <div class="caption">
                                     <h4 class="pull-right">${{$book->price}}</h4>
                                     <h4><a href="#">{{$book->name}}</a></h4>
-                                    <p>{{$book->desc}}
+                                    <p>{{$book->desc}}</p>
+                                    @auth
+                                    <form class="form-horizontal" method="POST"
+                                          action="{{route('cart.store')}}">
+                                        {{ method_field('POST') }}
+                                        {{csrf_field()}}
+                                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                        <input type="hidden" name="quantity" value="{{ 1 }}">
+                                        <input type="hidden" name="product_id" value="{{ $book->id }}">
                                         <button href="#" class="btn btn-primary" role="button">Button</button>
-                                    </p>
+                                    </form>
+                                    @endauth
 
                                 </div>
 

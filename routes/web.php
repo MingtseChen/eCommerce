@@ -21,6 +21,7 @@ Route::group(['middleware' => ['admin']], function () {
 	Route::resource('admin/product', 'Admin\ProductController');
 });
 Route::resource('user/setting','User\MemberController');
+Route::resource('cart','User\CartController');
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');

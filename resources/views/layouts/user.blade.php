@@ -16,7 +16,7 @@
 <body>
 <div class="">
     {{--@include('partial.nav')--}}
-    <nav class="navbar navbar-default navbar-static-top">
+    {{--<nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -72,15 +72,68 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav>--}}
+    <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{route('index')}}">Start Bootstrap</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                            @else
+                                <li><a href="#">Cart</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                       aria-expanded="false">
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                                Logout
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                  style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+                                        @if(Auth::user()->isAdmin == 1)
+                                            <li><a href="{{route('user.index')}}">Setting</a></li>
+                                        @else
+                                            <li><a href="{{route('setting.index')}}">Setting</a></li>
+                                        @endif
+                                    </ul>
+                                </li>
+                                @endguest
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-2">
                 <div class="list-group">
-                    <a href="{{route('user.index')}}" class="list-group-item">會員管理</a>
-                    <a href="{{route('manager.index')}}" class="list-group-item">Admin Manage</a>
-                    <a href="{{route('product.index')}}" class="list-group-item">商品管理</a>
-                    <a href="#" class="list-group-item">訂單管理</a>
+                    <a href="{{route('setting.index')}}" class="list-group-item">會員管理</a>
+                    <a href="#" class="list-group-item">我的訂單</a>
                 </div>
             </div>
             <div class="col-md-10">
